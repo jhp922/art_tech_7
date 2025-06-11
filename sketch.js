@@ -1,12 +1,35 @@
 // 전체 수정된 코드 (캐릭터 등장 문제 해결, 누락 함수 포함)
+// Nature Interaction by 임규빈, 오세진, 박지환
+// Fullscreen and scaling modification by Perplexity
 
+// === 비율 스케일 관련 ===
+const BASE_WIDTH = 800;
+const BASE_HEIGHT = 450;
+let scaleX = 1;
+let scaleY = 1;
+
+function updateScaleFactors() {
+  scaleX = width / BASE_WIDTH;
+  scaleY = height / BASE_HEIGHT;
+}
+
+// --- 전역 변수 ---
 let state = "start"; // "start" or "game" or "credit"
-
+// 폰트
 let pixelFont;
+let koreanFont;
+
 
 // 크레딧 관련
+let credit_bg_fade = 0;
+let credit_fade = 0;
 let creditY = 500;
+let credit_frame = 0;
 let creditTexts = [
+  "THE END",
+  "제작",
+  "박지환,임규빈,오세진",
+  "역할 분담",
   "기획",
   "임규빈: 애니메이션 주제, 디자인 요소 기획",
   "오세진: 인터랙션, 손 인식 기획",
@@ -23,16 +46,12 @@ let creditTexts = [
   "박지환: 캐릭터/새 움직임, 나무 클릭"
 ];
 
-// === 비율 스케일 관련 ===
-const BASE_WIDTH = 800;
-const BASE_HEIGHT = 450;
-let scaleX = 1;
-let scaleY = 1;
-
-function updateScaleFactors() {
-  scaleX = width / BASE_WIDTH;
-  scaleY = height / BASE_HEIGHT;
-}
+// --- 배경 및 장면 관련 ---
+let background_move_n = 0;
+let sence = 1;
+let fade = 0;
+let fadeout_on = false;
+let fadeon_on = false;
 
 // 캐릭터 위치
 let characterX = 0;
@@ -42,50 +61,30 @@ let background_move_n = 0;
 let background_move = false;
 
 let sence = 1;
+// --- 이미지 변수 ---
 
 // 구름 관련 변수
 let img_cloud1,img_cloud2,img_cloud3,img_cloud4,img_cloud5,img_cloud6;
 let cloud_move_falme = 0;
 
-// 페이드 아웃 관련 변수
-let fade = 0;
-let fadeout_on = false;
-let fadeon_on = false;
-
 // 하늘 이미지
-let img_sky;
-let img_sky3;
-let img_sky4;
-let img_sky5;
+let img_sky, img_sky3, img_sky4, img_sky5;
 
 // 공장 이미지
-let img_factory1;
-let img_factory2;
+let img_factory1, img_factory2;
 
 //연기 관련 이미지;
-let img_smoke1;
-let img_smoke2;
-let smoke_move1 = 0;
-let smoke_move2 = 0;
-let smoke_move3 = 0;
-
-let img_ground;
-let img_ground2;
-let img_ground3;
-let img_ground4;
-let img_ground5;
-let img_ground6;
-
-let img_tree_1;
-let img_tree_2;
-let img_tree_3;
-let img_tree_4;
-
-let img_noleaf_tree_1;
-let img_noleaf_tree_2;
-let img_noleaf_tree_3;
-
+let img_smoke1, img_smoke2;
+let smoke_move1 = 0, smoke_move2 = 0, smoke_move3 = 0;
+// 땅
+let img_ground,img_ground2,img_ground3,img_ground4,img_ground5,img_ground6;
+//나무 관련이미지
+let img_tree_1, img_tree_2, img_tree_3, img_tree_4;
+let img_noleaf_tree_1, img_noleaf_tree_2, img_noleaf_tree_3;
 let img_cut_tree_1;
+
+//물건 이미지
+let axePixel, toyImg, oilImg, phoneImg;
 
 let handPose;
 let video;
@@ -155,6 +154,11 @@ function preload() {
 
   img_cut_tree_1 = loadImage('잘린나무1.png');
 
+  axePixel = loadImage("axepixel.png");
+  toyImg = loadImage("toy.png");
+  oilImg = loadImage("oil.png");
+  phoneImg = loadImage("cellphone.png");
+  
   handPose = ml5.handPose();
   openHandImg = loadImage('openHand.png');
   closedHandImg = loadImage('closedHand.png');
@@ -184,15 +188,18 @@ function setup() {
   video = createCapture(VIDEO);
   video.size(640, 480);
   video.hide();
+  handPose = ml5.handPose(video, { flipHorizontal: true }, () => {
+  console.log('Model Loaded!');
   handPose.detectStart(video, gotHands);
+ });
   frameRate(20);
 
   characterX = 627 * scaleX;
   characterY = 313 * scaleY;
 
-  objectX = 300 * scaleX;
-  objectY = 400 * scaleY;
-
+  objectX = 1500 * scaleX;
+  objectY = 450 * scaleY;
+  
   characterAppearAnim = false;
   characterAppearFrame = 0;
   characterAppearDone = false;
@@ -220,6 +227,7 @@ function draw() {
   drawHands();
 
   if (isGiven) {
+    showInstruction = false;
     characterX += 5 * scaleX;
     if(characterX >= width / 2 && sence == 5){
       isGiven = false;
@@ -229,6 +237,7 @@ function draw() {
     }
   }
 
+  
   if (objectVisible) {
     drawRecyclingBox(objectX, objectY);
   }
@@ -271,7 +280,25 @@ function draw() {
     drawBird();
   }
 }
+  if (isGrabbing && sence >= 1 && sence <= 4) {
+    const desc = itemDescs[sence - 1];     // 추후 수정 필
+    const boxW = 350 * scaleX;
+    const boxH = 100 * scaleY;
+    const boxX = width / 2;
+    const boxY = boxH / 2 + 20 * scaleY;
 
+    push();
+    fill(0, 180);
+    noStroke();
+    rectMode(CENTER);
+    rect(boxX, boxY, boxW, boxH, 20 * scaleX);
+    fill(255);
+    textAlign(CENTER, CENTER);
+    textSize(14 * scaleY);
+    textWrap(CHAR);
+    text(desc, boxX, boxY, boxW - 24 * scaleX, boxH - 24 * scaleY);
+    pop();
+  }
 }
 
 function windowResized() {
