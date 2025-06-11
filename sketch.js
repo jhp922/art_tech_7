@@ -1,5 +1,5 @@
-수정 전 코드
-
+// Nature Interaction by 임규빈, 오세진, 박지환
+// Fullscreen and scaling modification by Perplexity
 // 전체 수정된 코드 (캐릭터 등장 문제 해결, 누락 함수 포함)
 
 let state = "start"; // "start" or "game" or "credit"
