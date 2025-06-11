@@ -773,7 +773,7 @@ function background6(){
 
 function fadeout(){
   push();
-  fade += 4;
+  fade += 8;
   fill(0,0,0,fade);
   strokeWeight(0);
   rect(width/2, height/2, width, height);
@@ -788,7 +788,7 @@ function fadeout(){
 
 function fadeon(){
   push();
-  fade -= 4;
+  fade -= 8;
   fill(0,0,0,fade);
   strokeWeight(0);
   rect(width/2, height/2, width, height);
