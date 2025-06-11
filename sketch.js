@@ -352,7 +352,7 @@ function windowResized() {
 
   // 연령에 따라 캐릭터 위치 재설정
   if (currentAge === 0) {
-    characterX = 750 * scaleX;
+    characterX = 500 * scaleX;
     characterY = 450 * scaleY;
   } else {
     characterX = 40 * scaleX;
