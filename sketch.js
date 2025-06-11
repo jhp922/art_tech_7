@@ -53,7 +53,7 @@ let characterY = 0;
 let background_move_n = 0;
 let background_move = false;
 
-let sence = 4;
+let sence = 1;
 
 // 구름 관련 변수
 let img_cloud1,img_cloud2,img_cloud3,img_cloud4,img_cloud5,img_cloud6;
