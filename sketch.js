@@ -201,8 +201,8 @@ function preload() {
 function setCharacterPositionByAge() {
   if (currentAge === 0) {
     // 유아기: 둥근 황토길 중심
-    characterX = 400 * scaleX;
-    characterY = 360 * scaleY;
+    characterX =  350 * scaleX;
+    characterY = 300 * scaleY;
   } else {
     // 나머지 캐릭터는 왼쪽에서 등장
     characterX = 50 * scaleX;
