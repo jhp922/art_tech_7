@@ -55,7 +55,7 @@ let sence = 1;
 
 // 구름 관련 변수
 let img_cloud1,img_cloud2,img_cloud3,img_cloud4,img_cloud5,img_cloud6;
-let cloud_move[6] = {200,400,600,800,1000,1200};
+let cloud_move = [200,400,600,800,1000,1200];
 
 // 페이드 아웃 관련 변수
 let fade = 0;
