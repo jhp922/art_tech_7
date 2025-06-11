@@ -359,8 +359,8 @@ function windowResized() {
     characterY = 300 * scaleY;
   }
 
-  objectX = 300 * scaleX;
-  objectY = 400 * scaleY;
+  objectX = 1500 * scaleX;
+  objectY = 450 * scaleY;
 }
 
 
@@ -898,8 +898,8 @@ function nextCharacter() {
   }
   
   characterX = 40 * scaleX;
-  objectX = 300 * scaleX;
-  objectY = 400 * scaleY;
+  objectX = 1500 * scaleX;
+  objectY = 450 * scaleY;
 
   isGiven = false;
   objectVisible = true;
