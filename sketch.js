@@ -9,28 +9,31 @@ let koreanFont;
 
 // 크레딧 관련
 let credit_bg_fade = 0;
-let credit_fade = 0;
 let creditY = 500;
+let credit = 0;
 let credit_frame = 0;
 let creditTexts = [
-  "THE END",
+  "THE END", 
   "제작",
-  "박지환,임규빈,오세진",
-  "역할 분담",
-  "기획",
-  "임규빈: 애니메이션 주제, 디자인 요소 기획",
-  "오세진: 인터랙션, 손 인식 기획",
-  "박지환: 스토리, 레이아웃 기획",
+  "박지환,임규빈,오세진", 
+  "AI 사용비율",
+  "이미지",
+  "10%",
+  "코드",
+  "40%",
   "",
-  "디자인",
-  "임규빈: 배경, 나무, 공장",
-  "오세진: 물건, 손 커서",
-  "박지환: 사람, 새",
-  "",
-  "개발",
-  "임규빈: 배경 이동/페이드, 나무 인터랙션",
-  "오세진: 손 인식, 물건 잡기, 손 효과",
-  "박지환: 캐릭터/새 움직임, 나무 클릭"
+  "ai를 참고하여 제작한 콘텐츠",
+  "ml5 핸드포즈관련 코드, 캐릭터 생성 효과 코드, fullscreen 관련 코드",
+  "1,2,3,4 장면의 사람 이미지,건네주는 물건일부(도끼,기름통,핸드폰)",
+  "사용한 기능",
+  "ml5.js handPose() 손인식,createGraphics() 픽셀화 애니메이션,\nframeToggle 캐릭터 걷기 애니메이션,loadFont() 폰트 파일 로딩,\nloadImage() 이미지 파일 로딩,preload() 이미지 및 폰트 미리 불러오기",
+  "소감",
+  "박지환",
+  "자바로 구현하고자 하는 기능을 구현시키는 것을 넘어서 각자 만든 코드를 통합하고 전체 코드를 수정하는 작업이 생각보다 힘들었고,\n 깃허브나 여러가지 유용한 툴에 대한 이해도를 기를 수 있어 많은 교훈을 얻은 팀 프로젝트 활동이었다",
+  "오세진",
+  "이번 프로젝트는 p5.js와 ml5.js의 handpose 모델을 활용하여 '환경 파괴'라는 주제를 다루는 인터랙티브 아트 프로젝트입니다.\n 키보드나 마우스 대신 '손으로 집는'  제스처를 사용하여 사용자의 몰입도를 높였으며, 캐릭터 등장 애니메이션 같은 디테일한 연출로 작품의 완성도를 높였습니다.\n 진행하면서 어려웠던 점은 픽셀 아트로 제작된 모든 요소의 위치를 자연스럽게 배치하기 위해 좌표를 일일이 수작업으로 조정하는 데 많은 시간을 소요했으며,\n 심지어 처음에는 고정된 크기로 개발했다가 전체 화면으로 전환하는 과정에서 또 위치값을 바꿔야하는 큰 어려움을 겪었습니다.\n 모든 좌표를 windowsize에 맞게 수정하며 수많은 오류를 해결해야 했습니다.\n 팀원들의 코드를 하나로 통합시키면서 완성된 작품으로 구현하며 큰 성취감을 느꼈습니다.\n 특히 픽셀 단위의 조정과 전체 화면 전환 과정에서 겪은 어려움은 향후 더 복잡한 프로젝트를 수행하는 데 있어 큰 도움이 될 것 같습니다.\n 이 경험은 기술을 활용한 인터랙티브 콘텐츠 활용 능력을 길러주기 위한 중요한 발사대 역할이 되었다고 생각합니다.",
+  "임규빈",
+  "조원들과 함께 환경을 보호하자를 주제로 코드를 만드는 팀프로젝트를 하게 되었습니다.\n 직접 그림를 그리고 코드를 쓰는 작업이 다소 힘들었지만 직접하면서 그림 실력과 자바스크립트의 툴과 문법들을 알아가게 되었습니다.\n 이번 팀 활동에서 코드 병합을 맡은 조원이 많이 힘들어 하는 모습을 보고 팀으로 코드를 짜게 될때는 코드를 보기 좋게 짜야한다는 조언을 얻어가게 되었습니다.",
 ];
 let img_crykid1;
 let img_crykid2;
@@ -406,60 +409,55 @@ function drawCredit() {
   rect(300 * scaleX,225 * scaleY,600 * scaleX,450 * scaleY);
   
   fill(255);
-  textAlign(LEFT, TOP);
-  textSize(32 * scaleY);
-  text("CREDIT", 100 * scaleX, 50 * scaleY);
-
+  textAlign(CENTER, CENTER);
   textSize(20 * scaleY);
+  text("CREDIT", 80 * scaleX, 20 * scaleY);
   
-  // 프레임에 따른 크레딕 변화
-  if(credit_frame >= 0 && credit_frame <= 30){
-    textSize(100 * scaleY);
-    credit_fade += 8
-    text(creditTexts[0], width / 2, creditY - 80 * scaleY);
-  }
-  
-  if(credit_frame >= 30 && credit_frame <= 90){
-    textSize(100 * scaleY);
-    text(creditTexts[0], width / 2, creditY - 80 * scaleY);
-  }
-  
-  if(credit_frame >= 90 && credit_frame <= 120){
-    textSize(100 * scaleY);
-    credit_fade -= 8
-    text(creditTexts[0], width / 2, creditY - 80 * scaleY);
-  }
-  
-  if(credit_frame >= 121 && credit_frame <= 150){
-    textSize(50 * scaleY);
-    credit_fade += 8
-    text(creditTexts[1], width / 2, creditY - 80 * scaleY);
-    text(creditTexts[2], width / 2, creditY - 80 * scaleY);
-  }
-  
-  if(credit_frame >= 151 && credit_frame <= 210){
-    textSize(50 * scaleY);
-    text(creditTexts[1], width / 2, creditY - 80 * scaleY);
-    text(creditTexts[2], width / 2, creditY - 80 * scaleY);
-  }
-  if(credit_frame >= 211 && credit_frame <= 240){
-    textSize(50 * scaleY);
-    credit_fade -= 8
-    text(creditTexts[1], width / 2, creditY - 80 * scaleY);
-    text(creditTexts[2], width / 2, creditY - 80 * scaleY);
-  }
-  
-  
-  if(credit_frame >= 241){
-    textSize(100 * scaleY);
-    credit_fade -= 8
-    text(creditTexts[0], width / 2, creditY - 80 * scaleY);
+  switch(credit){
+    case 0:
+      textSize(100 * scaleY);
+      text(creditTexts[0], 300 * scaleX, 200 * scaleY);
+      textSize(30 * scaleY);
+      text(creditTexts[1], 300 * scaleX, 300 * scaleY);
+      text(creditTexts[2], 300 * scaleX, 350 * scaleY);
+      break;
+    case 1:
+      textSize(50 * scaleY);
+      text(creditTexts[3], 300 * scaleX, 200 * scaleY);
+      textSize(30 * scaleY);
+      text(creditTexts[4], 200 * scaleX, 300 * scaleY);
+      text(creditTexts[5], 200 * scaleX, 350 * scaleY);
+      text(creditTexts[6], 400 * scaleX, 300 * scaleY);
+      text(creditTexts[7], 400 * scaleX, 350 * scaleY);
+      break;
+    case 2:
+      textSize(40 * scaleY);
+      text(creditTexts[9], 300 * scaleX, 50 * scaleY);
+      textSize(20 * scaleY);
+      text(creditTexts[10], 300 * scaleX, 150 * scaleY);
+      text(creditTexts[11], 300 * scaleX, 190 * scaleY);
+      textSize(40 * scaleY);
+      text(creditTexts[12], 300 * scaleX, 250 * scaleY);
+      textSize(15 * scaleY);
+      text(creditTexts[13], 300 * scaleX, 320 * scaleY);
+      break;
+    case 3:
+      textSize(40 * scaleY);
+      text(creditTexts[14], 300 * scaleX, 50 * scaleY);
+      textSize(20 * scaleY);
+      text(creditTexts[15], 300 * scaleX, 100 * scaleY);
+      text(creditTexts[17], 300 * scaleX, 180 * scaleY);
+      text(creditTexts[19], 300 * scaleX, 330 * scaleY);
+      textSize(8 * scaleY);
+      text(creditTexts[16], 300 * scaleX, 150 * scaleY);
+      text(creditTexts[18], 300 * scaleX, 260 * scaleY);
+      text(creditTexts[20], 300 * scaleX, 380 * scaleY);
+      break;
   }
   
   if(credit_bg_fade < 230){
     credit_bg_fade +=5;
   }
-  
   credit_frame += 1;
 }
 
@@ -491,6 +489,9 @@ function keyPressed() {
     characterAppearAnim = true;
     characterAppearFrame = 0;
     characterAppearDone = false;
+  }
+  if(credit_bg_fade > 50){
+    credit += 1;
   }
 }
 
