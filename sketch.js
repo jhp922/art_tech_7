@@ -476,7 +476,9 @@ function mousePressed(){
   }
 
   if (state === "game" && sence === 3) treeClicked();
-
+  if(credit_bg_fade > 50){
+    credit += 1;
+  }
 }
 
 function keyPressed() {
@@ -751,22 +753,22 @@ function background6(){
   image(img_sky5,1400 * scaleX + background_move_n * scaleX,225 * scaleY,1200 * scaleX,450 * scaleY);
   image(img_ground6,1400 * scaleX + background_move_n * scaleX,225 * scaleY,1200 * scaleX,450 * scaleY);
   if(credit_frame > 120 && credit_frame < 820){
-    background_move_n -= 1;
+    background_move_n -= 2;
     if(int(credit_frame / 10) % 2 == 1){
-      image(standImgs[0],1070 * scaleX - 370 * scaleX ,320 * scaleY,70 * scaleX,70 * scaleY);
+      image(standImgs[0],1120 * scaleX - 370 * scaleX ,320 * scaleY,70 * scaleX,70 * scaleY);
     }else{
-      image(walkImgs[0],1070 * scaleX - 370 * scaleX,320 * scaleY,70 * scaleX,70 * scaleY);
+      image(walkImgs[0],1120 * scaleX - 370 * scaleX,320 * scaleY,70 * scaleX,70 * scaleY);
 
     }
   }else if(credit_frame > 820){
     if(int(credit_frame / 10) % 2 == 1){
-      image(img_crykid1,1070 * scaleX - 370 * scaleX ,320 * scaleY,70 * scaleX,70 * scaleY);
+      image(img_crykid1,1120 * scaleX - 370 * scaleX ,320 * scaleY,70 * scaleX,70 * scaleY);
     }else{
-      image(img_crykid2,1070 * scaleX - 370 * scaleX,320 * scaleY,70 * scaleX,70 * scaleY);
+      image(img_crykid2,1120 * scaleX - 370 * scaleX,320 * scaleY,70 * scaleX,70 * scaleY);
 
     }
   }else{
-    image(standImgs[0],1070 * scaleX + background_move_n * scaleX,320 * scaleY,70 * scaleX,70 * scaleY);
+    image(standImgs[0],1120 * scaleX + background_move_n * scaleX,320 * scaleY,70 * scaleX,70 * scaleY);
   }
   
   if(background_move_n > -370){
