@@ -137,6 +137,8 @@ let baseY = 0;
 let showBird = false;
 let frameToggle1 = false;
 
+
+
 function preload() {
   pixelFont = loadFont('PressStart2P-Regular.ttf');
   koreanFont = loadFont('IBMPlexSansKR-Text.ttf');
@@ -201,6 +203,16 @@ function preload() {
   birdImgs[1] = loadImage('bird2.png');
 }
 
+function setCharacterPositionByAge() {
+  if (currentAge === 0) {
+    characterX = 500 * scaleX;
+    characterY = 450 * scaleY;
+  } else {
+    characterX = 40 * scaleX;
+    characterY = 300 * scaleY;
+  }
+}
+
 function setup() {
   createCanvas(windowWidth, windowHeight);
   updateScaleFactors();
@@ -216,8 +228,7 @@ function setup() {
   handPose.detectStart(video, gotHands);
   frameRate(20);
 
-  characterX = 500 * scaleX;  //627
-  characterY = 450 * scaleY;  //313
+  setCharacterPositionByAge();
 
   objectX = 1500 * scaleX;
   objectY = 450 * scaleY;
@@ -349,19 +360,11 @@ function draw() {
 function windowResized() {
   resizeCanvas(windowWidth, windowHeight);
   updateScaleFactors();
-
-  // 연령에 따라 캐릭터 위치 재설정
-  if (currentAge === 0) {
-    characterX = 500 * scaleX;
-    characterY = 450 * scaleY;
-  } else {
-    characterX = 40 * scaleX;
-    characterY = 300 * scaleY;
-  }
-
+  setCharacterPositionByAge();
   objectX = 1500 * scaleX;
   objectY = 450 * scaleY;
 }
+
 
 
 
@@ -896,8 +899,9 @@ function nextCharacter() {
       currentAge = 3;
       break;
   }
-  
-  characterX = 40 * scaleX;
+
+  setCharacterPositionByAge();
+
   objectX = 1500 * scaleX;
   objectY = 450 * scaleY;
 
@@ -907,11 +911,6 @@ function nextCharacter() {
   characterAppearFrame = 0;
 }
 
-function isNearObject(x, y) {
-  let d = dist(x, y, objectX, objectY);
-  
-  return d < 100; // 이 값이 작으면 인식이 빡빡함
-}
 
 
 
