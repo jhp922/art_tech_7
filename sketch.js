@@ -471,7 +471,16 @@ function mousePressed(){
 }
 
 function keyPressed() {
-  if (!fullscreen()) fullscreen(true);
+  if (keyCode === ESCAPE) {
+    // 아무 동작도 하지 않음: ESC 누르면 그냥 무시
+    return;
+  }
+
+  if (!fullscreen()) {
+    fullscreen(true);
+    return;
+  }
+
   if (state === "start" && (key === ' ' || keyCode === ENTER)) {
     state = "game";
     characterAppearAnim = true;
@@ -479,6 +488,7 @@ function keyPressed() {
     characterAppearDone = false;
   }
 }
+
 
 function drawCharacterAppearAnim() {
   let img = standImgs[currentAge];
