@@ -752,7 +752,7 @@ function background6(){
   push();
   image(img_sky5,1400 * scaleX + background_move_n * scaleX,225 * scaleY,1200 * scaleX,450 * scaleY);
   image(img_ground6,1400 * scaleX + background_move_n * scaleX,225 * scaleY,1200 * scaleX,450 * scaleY);
-  if(credit_frame > 120 && credit_frame < 820){
+  if(credit_frame > 60 && credit_frame < 410){
     background_move_n -= 2;
     if(int(credit_frame / 10) % 2 == 1){
       image(standImgs[0],1120 * scaleX - 370 * scaleX ,320 * scaleY,70 * scaleX,70 * scaleY);
@@ -760,7 +760,7 @@ function background6(){
       image(walkImgs[0],1120 * scaleX - 370 * scaleX,320 * scaleY,70 * scaleX,70 * scaleY);
 
     }
-  }else if(credit_frame > 820){
+  }else if(credit_frame > 410){
     if(int(credit_frame / 10) % 2 == 1){
       image(img_crykid1,1120 * scaleX - 370 * scaleX ,320 * scaleY,70 * scaleX,70 * scaleY);
     }else{
