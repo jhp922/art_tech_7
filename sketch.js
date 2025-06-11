@@ -200,11 +200,11 @@ function preload() {
 
 function setCharacterPositionByAge() {
   if (currentAge === 0) {
-    characterX = 500 * scaleX;
-    characterY = 250 * scaleY;
+    characterX = 400 * scaleX;
+    characterY = 200 * scaleY;
   } else {
-    characterX = 40 * scaleX;
-    characterY = 250 * scaleY;
+    characterX = 150 * scaleX;
+    characterY = 300 * scaleY;
   }
 }
 
@@ -225,8 +225,8 @@ function setup() {
 
   setCharacterPositionByAge();
 
-  objectX = 50 * scaleX;
-  objectY = 200 * scaleY;
+  objectX = 150 * scaleX;
+  objectY = 300 * scaleY;
 
   characterAppearAnim = false;
   characterAppearFrame = 0;
@@ -829,7 +829,7 @@ function updateHandState() {
     let indexY = indexTip.y / 480 * height;
 
     let d = dist(thumbX, thumbY, indexX, indexY);
-    if (d < 40) {
+    if (d < 70) {
       if (!isGrabbing && objectVisible && isNearObject(indexX, indexY)) {
         isGrabbing = true;
         offsetX = objectX - indexX;
@@ -899,8 +899,8 @@ function nextCharacter() {
 
   setCharacterPositionByAge();
 
-  objectX = 1500 * scaleX;
-  objectY = 450 * scaleY;
+  objectX = 150 * scaleX;
+  objectY = 300 * scaleY;
 
   isGiven = false;
   objectVisible = true;
