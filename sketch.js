@@ -200,10 +200,12 @@ function preload() {
 
 function setCharacterPositionByAge() {
   if (currentAge === 0) {
+    // 유아기: 둥근 황토길 중심
     characterX = 400 * scaleX;
-    characterY = 200 * scaleY;
+    characterY = 360 * scaleY;
   } else {
-    characterX = 150 * scaleX;
+    // 나머지 캐릭터는 왼쪽에서 등장
+    characterX = 50 * scaleX;
     characterY = 300 * scaleY;
   }
 }
@@ -356,9 +358,12 @@ function windowResized() {
   resizeCanvas(windowWidth, windowHeight);
   updateScaleFactors();
   setCharacterPositionByAge();
-  objectX = 150 * scaleX;
+
+  // 오브젝트도 재배치 (캐릭터와 겹치지 않게)
+  objectX = 650 * scaleX;
   objectY = 300 * scaleY;
 }
+
 
 
 
@@ -881,7 +886,8 @@ function drawObject(x, y) {
 
 function nextCharacter() {
   sence += 1;
-  switch(sence){
+
+  switch (sence) {
     case 1:
       currentAge = 0;
       break;
@@ -899,7 +905,8 @@ function nextCharacter() {
 
   setCharacterPositionByAge();
 
-  objectX = 150 * scaleX;
+  // 물건은 항상 캐릭터보다 오른쪽에 생성
+  objectX = 650 * scaleX;
   objectY = 300 * scaleY;
 
   isGiven = false;
@@ -907,6 +914,7 @@ function nextCharacter() {
   characterAppearDone = false;
   characterAppearFrame = 0;
 }
+
 
 
 
