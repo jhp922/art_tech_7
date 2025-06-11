@@ -135,6 +135,9 @@ let baseY = 0;
 let showBird = false;
 let frameToggle1 = false;
 
+let treeCut = [false, false, false]; // 잎 없는 나무 3그루 클릭 여부
+
+
 
 
 function preload() {
@@ -471,6 +474,9 @@ function mousePressed(){
   } else {
     isGiven = true;
   }
+
+  if (state === "game" && sence === 3) treeClicked();
+
 }
 
 function keyPressed() {
@@ -635,34 +641,36 @@ function background2(){
   pop();
 }
 
-function background3(){
+function background3() {
   push();
-  image(img_sky3,400 * scaleX,225 * scaleY,800 * scaleX,450 * scaleY);
-  image(img_ground3,400 * scaleX,225 * scaleY,800 * scaleX,450 * scaleY);
+  image(img_sky3, 400 * scaleX, 225 * scaleY, 800 * scaleX, 450 * scaleY);
+  image(img_ground3, 400 * scaleX, 225 * scaleY, 800 * scaleX, 450 * scaleY);
 
-  image(img_factory1,130 * scaleX,204 * scaleY,200 * scaleX,200 * scaleY);
-  image(img_factory1,600 * scaleX,204 * scaleY,200 * scaleX,200 * scaleY);
+  image(img_factory1, 130 * scaleX, 204 * scaleY, 200 * scaleX, 200 * scaleY);
+  image(img_factory1, 600 * scaleX, 204 * scaleY, 200 * scaleX, 200 * scaleY);
 
-  image(img_tree_1,0 * scaleX + background_move_n * scaleX,190 * scaleY,150 * scaleX,270 * scaleY);
-  image(img_cut_tree_1,100 * scaleX + background_move_n * scaleX,300 * scaleY,120 * scaleX,120 * scaleY);
-  image(img_cut_tree_1,200 * scaleX + background_move_n * scaleX,280 * scaleY,120 * scaleX,120 * scaleY);  
-  image(img_tree_2,400 * scaleX + background_move_n * scaleX,170 * scaleY,150 * scaleX,270 * scaleY);
-  image(img_noleaf_tree_3,500 * scaleX + background_move_n * scaleX,190 * scaleY,150 * scaleX,270 * scaleY);
-  image(img_noleaf_tree_2,600 * scaleX + background_move_n * scaleX,190 * scaleY,150 * scaleX,270 * scaleY);
-  image(img_noleaf_tree_1,300 * scaleX + background_move_n * scaleX,190 * scaleY,150 * scaleX,270 * scaleY);
-  image(img_tree_1,800 * scaleX + background_move_n * scaleX,190 * scaleY,150 * scaleX,270 * scaleY);
+  image(img_tree_1, 0, 190 * scaleY, 150 * scaleX, 270 * scaleY);
+  image(img_cut_tree_1, 100 * scaleX, 300 * scaleY, 120 * scaleX, 120 * scaleY);
+  image(img_cut_tree_1, 200 * scaleX, 280 * scaleY, 120 * scaleX, 120 * scaleY);  
 
-  image(img_noleaf_tree_3,0 * scaleX,450 * scaleY,150 * scaleX,270 * scaleY);
-  image(img_tree_1,100 * scaleX,450 * scaleY,150 * scaleX,270 * scaleY);
-  image(img_noleaf_tree_1,300 * scaleX,430 * scaleY,150 * scaleX,270 * scaleY);
-  image(img_noleaf_tree_2,400 * scaleX,450 * scaleY,150 * scaleX,270 * scaleY);
-  image(img_tree_4,500 * scaleX,450 * scaleY,150 * scaleX,270 * scaleY);
-  image(img_noleaf_tree_3,600 * scaleX,450 * scaleY,150 * scaleX,270 * scaleY);
-  image(img_cut_tree_1,700 * scaleX + background_move_n * scaleX,430 * scaleY,120 * scaleX,120 * scaleY);  
-  image(img_tree_2,800 * scaleX,450 * scaleY,150 * scaleX,270 * scaleY);
+  image(img_tree_2, 400 * scaleX, 170 * scaleY, 150 * scaleX, 270 * scaleY);
+  if (!treeCut[0]) image(img_noleaf_tree_1, 300 * scaleX, 190 * scaleY, 150 * scaleX, 270 * scaleY);
+  if (!treeCut[1]) image(img_noleaf_tree_3, 500 * scaleX, 190 * scaleY, 150 * scaleX, 270 * scaleY);
+  if (!treeCut[2]) image(img_noleaf_tree_2, 600 * scaleX, 190 * scaleY, 150 * scaleX, 270 * scaleY);
+  image(img_tree_1, 800 * scaleX, 190 * scaleY, 150 * scaleX, 270 * scaleY);
+
+  image(img_noleaf_tree_3, 0, 450 * scaleY, 150 * scaleX, 270 * scaleY);
+  image(img_tree_1, 100 * scaleX, 450 * scaleY, 150 * scaleX, 270 * scaleY);
+  image(img_noleaf_tree_1, 300 * scaleX, 430 * scaleY, 150 * scaleX, 270 * scaleY);
+  image(img_noleaf_tree_2, 400 * scaleX, 450 * scaleY, 150 * scaleX, 270 * scaleY);
+  image(img_tree_4, 500 * scaleX, 450 * scaleY, 150 * scaleX, 270 * scaleY);
+  image(img_noleaf_tree_3, 600 * scaleX, 450 * scaleY, 150 * scaleX, 270 * scaleY);
+  image(img_cut_tree_1, 700 * scaleX, 430 * scaleY, 120 * scaleX, 120 * scaleY);  
+  image(img_tree_2, 800 * scaleX, 450 * scaleY, 150 * scaleX, 270 * scaleY);
 
   pop();
 }
+
 
 function background4(){
   push();
@@ -942,4 +950,25 @@ function drawBird(){
     60 * scaleX, 60 * scaleY
   );
 }
+
+function treeClicked() {
+  if (!treeCut[0] &&
+      mouseX > 300 * scaleX && mouseX < 450 * scaleX &&
+      mouseY > 190 * scaleY && mouseY < 460 * scaleY) {
+    treeCut[0] = true;
+  }
+
+  if (!treeCut[1] &&
+      mouseX > 500 * scaleX && mouseX < 650 * scaleX &&
+      mouseY > 190 * scaleY && mouseY < 460 * scaleY) {
+    treeCut[1] = true;
+  }
+
+  if (!treeCut[2] &&
+      mouseX > 600 * scaleX && mouseX < 750 * scaleX &&
+      mouseY > 190 * scaleY && mouseY < 460 * scaleY) {
+    treeCut[2] = true;
+  }
+}
+
 
