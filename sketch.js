@@ -182,7 +182,7 @@ function preload() {
 
   img_cut_tree_1 = loadImage('잘린나무1.png');
 
-  axePixel = loadImage("axepixel.png");
+  axePixel = loadImage("axe.png");
   toyImg = loadImage("toy.png");
   oilImg = loadImage("oil.png");
   phoneImg = loadImage("cellphone.png");
