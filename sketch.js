@@ -47,8 +47,8 @@ function updateScaleFactors() {
 }
 
 // 캐릭터 위치
-let characterX = 0;
-let characterY = 0;
+let characterX ;
+let characterY ;
 
 let background_move_n = 0;
 let background_move = false;
@@ -216,7 +216,7 @@ function setup() {
   handPose.detectStart(video, gotHands);
   frameRate(20);
 
-  characterX = 500 * scaleX;  //627
+  characterX = 750 * scaleX;  //627
   characterY = 450 * scaleY;  //313
 
   objectX = 1500 * scaleX;
@@ -352,8 +352,8 @@ function windowResized() {
 
   // 연령에 따라 캐릭터 위치 재설정
   if (currentAge === 0) {
-    characterX = 627 * scaleX;
-    characterY = 313 * scaleY;
+    characterX = 750 * scaleX;
+    characterY = 450 * scaleY;
   } else {
     characterX = 40 * scaleX;
     characterY = 300 * scaleY;
