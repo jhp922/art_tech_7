@@ -5,10 +5,18 @@
 let state = "start"; // "start" or "game" or "credit"
 
 let pixelFont;
+let koreanFont;
 
 // 크레딧 관련
+let credit_bg_fade = 0;
+let credit_fade = 0;
 let creditY = 500;
+let credit_frame = 0;
 let creditTexts = [
+  "THE END",
+  "제작",
+  "박지환,임규빈,오세진",
+  "역할 분담",
   "기획",
   "임규빈: 애니메이션 주제, 디자인 요소 기획",
   "오세진: 인터랙션, 손 인식 기획",
@@ -24,6 +32,8 @@ let creditTexts = [
   "오세진: 손 인식, 물건 잡기, 손 효과",
   "박지환: 캐릭터/새 움직임, 나무 클릭"
 ];
+let img_crykid1;
+let img_crykid2;
 
 // === 비율 스케일 관련 ===
 const BASE_WIDTH = 800;
@@ -128,7 +138,10 @@ let frameToggle1 = false;
 
 function preload() {
   pixelFont = loadFont('PressStart2P-Regular.ttf');
-
+  koreanFont = loadFont('IBMPlexSansKR-Text.ttf');
+  
+  img_crykid1 = loadImage('우는 아이1.png');
+  img_crykid2 = loadImage('우는 아이2.png');
   img_sky = loadImage('하늘.png');
   img_sky3 = loadImage('하늘3.png');
   img_sky4 = loadImage('하늘4.png');
@@ -231,19 +244,30 @@ function draw() {
   } else {
     drawCharacter(characterX, characterY, isGiven, currentAge);
   }
-
-  drawHands();
-
-  if (isGiven) {
+  
+  if(sence === 5 && fadeout_on === false && fadeon_on === false){
     showInstruction = false;
-    characterX += 5 * scaleX;
-    if(characterX >= width / 2 && sence == 5){
+    isGiven = true;
+    if(characterX <= width / 2){
+      characterX += 3 * scaleX;
+    }else{
       isGiven = false;
-    }
-    if (characterX > width + 50 * scaleX) {
-      fadeout_on = true;
+      background6();
     }
   }
+
+  drawHands();
+  if (isGiven) {
+    showInstruction = false;	
+    if(sence != 5){
+      characterX += 5 * scaleX;
+      if (characterX > width + 50 * scaleX) {
+        fadeout_on = true;
+      }
+    }
+
+  }
+  
 
   if (objectVisible) {
     drawObject(objectX, objectY);
@@ -319,6 +343,8 @@ function draw() {
   }
 }
 
+
+
 function windowResized() {
   resizeCanvas(windowWidth, windowHeight);
   updateScaleFactors();
@@ -369,23 +395,68 @@ function drawStartScreen() {
   }
 }
 
+
 function drawCredit() {
-  background(0, 0, 0, 220);
+  textFont(koreanFont);
+  fill(0,0,0,credit_bg_fade);
+  rect(300 * scaleX,225 * scaleY,600 * scaleX,450 * scaleY);
+  
   fill(255);
-  textAlign(CENTER, TOP);
+  textAlign(LEFT, TOP);
   textSize(32 * scaleY);
-  text("CREDIT", width / 2, creditY - 80 * scaleY);
+  text("CREDIT", 100 * scaleX, 50 * scaleY);
 
   textSize(20 * scaleY);
-  for (let i = 0; i < creditTexts.length; i++) {
-    text(creditTexts[i], width / 2, creditY + i * 30 * scaleY);
+  
+  // 프레임에 따른 크레딕 변화
+  if(credit_frame >= 0 && credit_frame <= 30){
+    textSize(100 * scaleY);
+    credit_fade += 8
+    text(creditTexts[0], width / 2, creditY - 80 * scaleY);
   }
-
-  if (creditY + creditTexts.length * 30 * scaleY > 100 * scaleY) {
-    creditY -= 1.5 * scaleY;
-  } else {
-    creditY = 100 * scaleY - creditTexts.length * 30 * scaleY;
+  
+  if(credit_frame >= 30 && credit_frame <= 90){
+    textSize(100 * scaleY);
+    text(creditTexts[0], width / 2, creditY - 80 * scaleY);
   }
+  
+  if(credit_frame >= 90 && credit_frame <= 120){
+    textSize(100 * scaleY);
+    credit_fade -= 8
+    text(creditTexts[0], width / 2, creditY - 80 * scaleY);
+  }
+  
+  if(credit_frame >= 121 && credit_frame <= 150){
+    textSize(50 * scaleY);
+    credit_fade += 8
+    text(creditTexts[1], width / 2, creditY - 80 * scaleY);
+    text(creditTexts[2], width / 2, creditY - 80 * scaleY);
+  }
+  
+  if(credit_frame >= 151 && credit_frame <= 210){
+    textSize(50 * scaleY);
+    text(creditTexts[1], width / 2, creditY - 80 * scaleY);
+    text(creditTexts[2], width / 2, creditY - 80 * scaleY);
+  }
+  if(credit_frame >= 211 && credit_frame <= 240){
+    textSize(50 * scaleY);
+    credit_fade -= 8
+    text(creditTexts[1], width / 2, creditY - 80 * scaleY);
+    text(creditTexts[2], width / 2, creditY - 80 * scaleY);
+  }
+  
+  
+  if(credit_frame >= 241){
+    textSize(100 * scaleY);
+    credit_fade -= 8
+    text(creditTexts[0], width / 2, creditY - 80 * scaleY);
+  }
+  
+  if(credit_bg_fade < 230){
+    credit_bg_fade +=5;
+  }
+  
+  credit_frame += 1;
 }
 
 function mousePressed(){
@@ -449,7 +520,7 @@ function drawCharacter(x, y, isGiven, ageIndex) {
     image(standImgs[ageIndex], x, y, 100 * scaleX, 100 * scaleY);
   } else {
     if (frameCount % 6 === 0) frameToggle = !frameToggle;
-    image(frameToggle ? walkImgs[ageIndex] : standImgs[ageIndex], x, y, 100 * scaleX, 100 * scaleY);
+    image(frameToggle ? walkImgs[ageIndex] : standImgs[ageIndex], x + background_move_n * scaleX, y, 100 * scaleX, 100 * scaleY);
   }
 }
 
@@ -632,10 +703,10 @@ function background5(){
   fill(0,0,255);
   image(img_sky5,400 * scaleX + background_move_n * scaleX,225 * scaleY,800 * scaleX,450 * scaleY);
   image(img_ground5,400 * scaleX + background_move_n * scaleX,225 * scaleY,800 * scaleX,450 * scaleY);
-  image(img_factory1,130 * scaleX,204 * scaleY,200 * scaleX,200 * scaleY);
-  image(img_factory1,600 * scaleX,204 * scaleY,200 * scaleX,200 * scaleY);
-  making_smoke(365 * scaleX,98 * scaleY);
-  image(img_factory2,370 * scaleX,183 * scaleY,150 * scaleX,150 * scaleY);
+  image(img_factory1,130 * scaleX + background_move_n * scaleX,204 * scaleY,200 * scaleX,200 * scaleY);
+  image(img_factory1,600 * scaleX + background_move_n * scaleX,204 * scaleY,200 * scaleX,200 * scaleY);
+  making_smoke(370 * scaleX + background_move_n * scaleX,110 * scaleY);
+  image(img_factory2,370 * scaleX + background_move_n * scaleX,183 * scaleY,150 * scaleX,150 * scaleY);
 
   image(img_cut_tree_1,200 * scaleX + background_move_n * scaleX,400 * scaleY,100 * scaleX,100 * scaleY);
   image(img_cut_tree_1,400 * scaleX + background_move_n * scaleX,280 * scaleY,100 * scaleX,100 * scaleY);
@@ -650,6 +721,23 @@ function background5(){
   image(img_cut_tree_1,750 * scaleX + background_move_n * scaleX,340 * scaleY,100 * scaleX,100 * scaleY);
   pop();
 }
+
+//
+function background6(){
+  push();
+  image(img_sky5,1400 * scaleX + background_move_n * scaleX,225 * scaleY,1200 * scaleX,450 * scaleY);
+  image(img_ground6,1400 * scaleX + background_move_n * scaleX,225 * scaleY,1200 * scaleX,450 * scaleY);
+  image(standImgs[0],1070 * scaleX + background_move_n * scaleX,320 * scaleY,70 * scaleX,70 * scaleY);
+  if(background_move_n > -370){
+    background_move_n -= 5;
+    
+  }else{
+    drawCredit();
+  }
+  
+  pop();
+}
+//
 
 function fadeout(){
   push();
