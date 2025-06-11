@@ -53,7 +53,7 @@ let characterY = 0;
 let background_move_n = 0;
 let background_move = false;
 
-let sence = 1;
+let sence = 4;
 
 // 구름 관련 변수
 let img_cloud1,img_cloud2,img_cloud3,img_cloud4,img_cloud5,img_cloud6;
@@ -104,6 +104,7 @@ let video;
 let hands = [];
 
 //오브젝트
+let showInstruction = true;
 let axePixel, toyImg, oilImg, phoneImg;
 let objectX = 0, objectY = 0;
 let objectVisible = true;
@@ -158,7 +159,7 @@ function preload() {
   img_ground3 = loadImage('땅3.png');
   img_ground4 = loadImage('땅4.png');
   img_ground5 = loadImage('땅5.png');
-  img_ground5 = loadImage('땅6.png');
+  img_ground6 = loadImage('땅6.png');
 
   img_cloud1 = loadImage('구름1.png');
   img_cloud2 = loadImage('구름2.png');
@@ -517,7 +518,7 @@ function drawCharacterAppearAnim() {
 
 function drawCharacter(x, y, isGiven, ageIndex) {
   if (!isGiven) {
-    image(standImgs[ageIndex], x, y, 100 * scaleX, 100 * scaleY);
+    image(standImgs[ageIndex], x+ background_move_n * scaleX, y, 100 * scaleX, 100 * scaleY);
   } else {
     if (frameCount % 6 === 0) frameToggle = !frameToggle;
     image(frameToggle ? walkImgs[ageIndex] : standImgs[ageIndex], x + background_move_n * scaleX, y, 100 * scaleX, 100 * scaleY);
@@ -727,7 +728,25 @@ function background6(){
   push();
   image(img_sky5,1400 * scaleX + background_move_n * scaleX,225 * scaleY,1200 * scaleX,450 * scaleY);
   image(img_ground6,1400 * scaleX + background_move_n * scaleX,225 * scaleY,1200 * scaleX,450 * scaleY);
-  image(standImgs[0],1070 * scaleX + background_move_n * scaleX,320 * scaleY,70 * scaleX,70 * scaleY);
+  if(credit_frame > 120 && credit_frame < 820){
+    background_move_n -= 1;
+    if(int(credit_frame / 10) % 2 == 1){
+      image(standImgs[0],1070 * scaleX - 370 * scaleX ,320 * scaleY,70 * scaleX,70 * scaleY);
+    }else{
+      image(walkImgs[0],1070 * scaleX - 370 * scaleX,320 * scaleY,70 * scaleX,70 * scaleY);
+
+    }
+  }else if(credit_frame > 820){
+    if(int(credit_frame / 10) % 2 == 1){
+      image(img_crykid1,1070 * scaleX - 370 * scaleX ,320 * scaleY,70 * scaleX,70 * scaleY);
+    }else{
+      image(img_crykid2,1070 * scaleX - 370 * scaleX,320 * scaleY,70 * scaleX,70 * scaleY);
+
+    }
+  }else{
+    image(standImgs[0],1070 * scaleX + background_move_n * scaleX,320 * scaleY,70 * scaleX,70 * scaleY);
+  }
+  
   if(background_move_n > -370){
     background_move_n -= 5;
     
@@ -918,3 +937,4 @@ function drawBird(){
     60 * scaleX, 60 * scaleY
   );
 }
+
