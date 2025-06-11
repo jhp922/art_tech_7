@@ -356,8 +356,8 @@ function windowResized() {
   resizeCanvas(windowWidth, windowHeight);
   updateScaleFactors();
   setCharacterPositionByAge();
-  objectX = 50 * scaleX;
-  objectY = 200 * scaleY;
+  objectX = 150 * scaleX;
+  objectY = 300 * scaleY;
 }
 
 
