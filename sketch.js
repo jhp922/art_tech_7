@@ -55,7 +55,7 @@ let sence = 1;
 
 // 구름 관련 변수
 let img_cloud1,img_cloud2,img_cloud3,img_cloud4,img_cloud5,img_cloud6;
-let cloud_move_falme = 0;
+let cloud_move[6] = {200,400,600,800,1000,1200};
 
 // 페이드 아웃 관련 변수
 let fade = 0;
@@ -573,14 +573,21 @@ function background_maker(){
 function cloud_maker(){
   if(background_move_n < -800 * scaleX){
   }else{
-    image(img_cloud1,200 * scaleX + background_move_n * scaleX + cloud_move_falme * scaleX,50 * scaleY,120 * scaleX,90 * scaleY);
-    image(img_cloud2,400 * scaleX + background_move_n * scaleX + cloud_move_falme * scaleX,70 * scaleY,150 * scaleX,120 * scaleY);
-    image(img_cloud3,600 * scaleX + background_move_n * scaleX + cloud_move_falme * scaleX,50 * scaleY,150 * scaleX,60 * scaleY);
-    image(img_cloud4,800 * scaleX + background_move_n * scaleX + cloud_move_falme * scaleX,70 * scaleY,180 * scaleX,120 * scaleY);
-    image(img_cloud5,1000 * scaleX + background_move_n * scaleX + cloud_move_falme * scaleX,50 * scaleY,180 * scaleX,120 * scaleY);
-    image(img_cloud6,1200 * scaleX + background_move_n * scaleX + cloud_move_falme * scaleX,70 * scaleY,120 * scaleX,80 * scaleY);
+    image(img_cloud1,cloud_move[0] * scaleX + background_move_n * scaleX + cloud_move_falme * scaleX,50 * scaleY,120 * scaleX,90 * scaleY);
+    image(img_cloud2,cloud_move[1] * scaleX + background_move_n * scaleX + cloud_move_falme * scaleX,70 * scaleY,150 * scaleX,120 * scaleY);
+    image(img_cloud3,cloud_move[2] * scaleX + background_move_n * scaleX + cloud_move_falme * scaleX,50 * scaleY,150 * scaleX,60 * scaleY);
+    image(img_cloud4,cloud_move[3] * scaleX + background_move_n * scaleX + cloud_move_falme * scaleX,70 * scaleY,180 * scaleX,120 * scaleY);
+    image(img_cloud5,cloud_move[4] * scaleX + background_move_n * scaleX + cloud_move_falme * scaleX,50 * scaleY,180 * scaleX,120 * scaleY);
+    image(img_cloud6,cloud_move[5] * scaleX + background_move_n * scaleX + cloud_move_falme * scaleX,70 * scaleY,120 * scaleX,80 * scaleY);
   }
-  cloud_move_falme += -0.2 * scaleX;
+
+  for(let i = 0; i < 6; i++){
+    cloud_move[i] += -0.2 * scaleX;
+    if(cloud_move[i] < -200){
+      cloud_move[i] = 1000
+    }
+  }
+  
 }
 
 function background1(){
