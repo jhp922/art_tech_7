@@ -93,10 +93,18 @@ let handPose;
 let video;
 let hands = [];
 
+//오브젝트
+let axePixel, toyImg, oilImg, phoneImg;
 let objectX = 0, objectY = 0;
 let objectVisible = true;
 let isGrabbing = false;
 let offsetX = 0, offsetY = 0;
+const itemDescs = [
+  "CAN PLAY WITH",
+  "CUT TREE",
+  "INDUSTRIAL DEVELOPMENT",
+  "RARE MINERAL CONSUMPTION",
+];
 
 let openHandImg, closedHandImg;
 let standImgs = [], walkImgs = [];
@@ -157,6 +165,11 @@ function preload() {
 
   img_cut_tree_1 = loadImage('잘린나무1.png');
 
+  axePixel = loadImage("axepixel.png");
+  toyImg = loadImage("toy.png");
+  oilImg = loadImage("oil.png");
+  phoneImg = loadImage("cellphone.png");
+  
   handPose = ml5.handPose();
   openHandImg = loadImage('openHand.png');
   closedHandImg = loadImage('closedHand.png');
@@ -192,8 +205,8 @@ function setup() {
   characterX = 627 * scaleX;
   characterY = 313 * scaleY;
 
-  objectX = 300 * scaleX;
-  objectY = 400 * scaleY;
+  objectX = 1500 * scaleX;
+  objectY = 450 * scaleY;
 
   characterAppearAnim = false;
   characterAppearFrame = 0;
@@ -222,6 +235,7 @@ function draw() {
   drawHands();
 
   if (isGiven) {
+    showInstruction = false;
     characterX += 5 * scaleX;
     if(characterX >= width / 2 && sence == 5){
       isGiven = false;
@@ -232,7 +246,7 @@ function draw() {
   }
 
   if (objectVisible) {
-    drawRecyclingBox(objectX, objectY);
+    drawObject(objectX, objectY);
   }
 
   updateHandState();
@@ -256,7 +270,9 @@ function draw() {
     state = "credit";
     creditY = height;
   }
-
+  
+  
+  
   if (
     state === "game" &&
     (sence === 2 || sence === 3) &&
@@ -273,7 +289,34 @@ function draw() {
     drawBird();
   }
 }
+  if (sence === 1 && showInstruction) {
+    fill(255);
+    stroke(0);
+    strokeWeight(3 * scaleX);
+    textAlign(CENTER, TOP);
+    textSize(30 * scaleY);
+    text("USE YOUR HAND TO\nPICK UP AN ITEM", width / 2, 10 * scaleY);
+  }
 
+  if (isGrabbing && sence >= 1 && sence <= 4) {
+    const desc = itemDescs[sence - 1];
+    const boxW = 350 * scaleX;
+    const boxH = 100 * scaleY;
+    const boxX = width / 2;
+    const boxY = boxH / 2 + 20 * scaleY;
+
+    push();
+    fill(0, 180);
+    noStroke();
+    rectMode(CENTER);
+    rect(boxX, boxY, boxW, boxH, 20 * scaleX);
+    fill(255);
+    textAlign(CENTER, CENTER);
+    textSize(14 * scaleY);
+    textWrap(CHAR);
+    text(desc, boxX, boxY, boxW - 24 * scaleX, boxH - 24 * scaleY);
+    pop();
+  }
 }
 
 function windowResized() {
@@ -301,41 +344,29 @@ function updateScaleFactors() {
 }
 
 function drawStartScreen() {
-  background1();
-
+  background1(0);
   let mainText = "NATURE";
-  let subText = "CLICK TO CONTINUE";
-  let explainText = "GRAB AND MOVE THE RED BOX TO THE CHARACTER";
-
+  let subText = "PRESS SPACE TO CONTINUE";
   textAlign(CENTER, CENTER);
-
   textSize(64 * scaleY);
   stroke(255);
-  strokeWeight(12 * scaleY);
+  strokeWeight(12 * scaleX);
   fill(0);
   text(mainText, width / 2, height / 2 - 40 * scaleY);
-
-  stroke(255);
-  strokeWeight(0);
+  noStroke();
   fill(0);
   text(mainText, width / 2, height / 2 - 40 * scaleY);
 
   if (frameCount % 60 < 30) {
     textSize(24 * scaleY);
     stroke(255);
-    strokeWeight(6 * scaleY);
+    strokeWeight(6 * scaleX);
     fill(0);
     text(subText, width / 2, height / 2 + 30 * scaleY);
-
-    strokeWeight(0);
+    noStroke();
     fill(0);
     text(subText, width / 2, height / 2 + 30 * scaleY);
   }
-
-  stroke(255);
-  strokeWeight(0);
-  fill(0);
-  text(explainText, width / 2, height / 2 + 50 * scaleY);  
 }
 
 function drawCredit() {
@@ -648,18 +679,18 @@ function fadeon(){
   pop();
 }
 
-function drawRecyclingBox(x, y) {
-  push();
-  noStroke();
-  const dotSize = 6 * scaleX;
-  fill(250,0,0);
-  for (let i = -3; i <= 3; i++) {
-    for (let j = -2; j <= 2; j++) {
-      rect(x + i * dotSize, y + j * dotSize, dotSize, dotSize);
-    }
-  }
-  pop();
-}
+// function drawRecyclingBox(x, y) {
+//   push();
+//   noStroke();
+//   const dotSize = 6 * scaleX;
+//   fill(250,0,0);
+//   for (let i = -3; i <= 3; i++) {
+//     for (let j = -2; j <= 2; j++) {
+//       rect(x + i * dotSize, y + j * dotSize, dotSize, dotSize);
+//     }
+//   }
+//   pop();
+// }
 
 function drawHands() {
   for (let hand of hands) {
@@ -723,6 +754,22 @@ function updateObjectPosition() {
   }
 }
 
+
+function drawObject(x, y) {
+  push();
+  let size1 = 100 * ((scaleX + scaleY) / 2);
+  let size2 = 60 * ((scaleX + scaleY) / 2);
+  if (sence === 1) {
+    image(toyImg, x, y, size1, size1);
+  } else if (sence === 2) {
+    image(axePixel, x, y, size2, size2);
+  } else if (sence === 3) {
+    image(oilImg, x, y, size2, size2);
+  } else if (sence === 4) {
+    image(phoneImg, x, y, size2, size2);
+  }
+  pop();
+}
 
 
 function nextCharacter() {
