@@ -216,7 +216,7 @@ function setup() {
   handPose.detectStart(video, gotHands);
   frameRate(20);
 
-  characterX = 750 * scaleX;  //627
+  characterX = 500 * scaleX;  //627
   characterY = 450 * scaleY;  //313
 
   objectX = 1500 * scaleX;
