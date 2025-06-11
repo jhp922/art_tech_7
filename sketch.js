@@ -48,6 +48,7 @@ let creditTexts = [
 
 // --- 배경 및 장면 관련 ---
 let background_move_n = 0;
+let background_move = false;
 let sence = 1;
 let fade = 0;
 let fadeout_on = false;
@@ -57,8 +58,6 @@ let fadeon_on = false;
 let characterX = 0;
 let characterY = 0;
 
-let background_move_n = 0;
-let background_move = false;
 
 let sence = 1;
 // --- 이미지 변수 ---
