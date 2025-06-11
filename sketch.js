@@ -41,11 +41,6 @@ const BASE_HEIGHT = 450;
 let scaleX = 1;
 let scaleY = 1;
 
-function updateScaleFactors() {
-  scaleX = width / BASE_WIDTH;
-  scaleY = height / BASE_HEIGHT;
-}
-
 // 캐릭터 위치
 let characterX ;
 let characterY ;
@@ -206,10 +201,10 @@ function preload() {
 function setCharacterPositionByAge() {
   if (currentAge === 0) {
     characterX = 500 * scaleX;
-    characterY = 450 * scaleY;
+    characterY = 250 * scaleY;
   } else {
     characterX = 40 * scaleX;
-    characterY = 300 * scaleY;
+    characterY = 250 * scaleY;
   }
 }
 
@@ -230,8 +225,8 @@ function setup() {
 
   setCharacterPositionByAge();
 
-  objectX = 1500 * scaleX;
-  objectY = 450 * scaleY;
+  objectX = 50 * scaleX;
+  objectY = 200 * scaleY;
 
   characterAppearAnim = false;
   characterAppearFrame = 0;
@@ -361,8 +356,8 @@ function windowResized() {
   resizeCanvas(windowWidth, windowHeight);
   updateScaleFactors();
   setCharacterPositionByAge();
-  objectX = 1500 * scaleX;
-  objectY = 450 * scaleY;
+  objectX = 50 * scaleX;
+  objectY = 200 * scaleY;
 }
 
 
@@ -788,19 +783,6 @@ function fadeon(){
   }
   pop();
 }
-
-// function drawRecyclingBox(x, y) {
-//   push();
-//   noStroke();
-//   const dotSize = 6 * scaleX;
-//   fill(250,0,0);
-//   for (let i = -3; i <= 3; i++) {
-//     for (let j = -2; j <= 2; j++) {
-//       rect(x + i * dotSize, y + j * dotSize, dotSize, dotSize);
-//     }
-//   }
-//   pop();
-// }
 
 function drawHands() {
   for (let hand of hands) {
