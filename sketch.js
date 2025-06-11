@@ -846,6 +846,11 @@ function updateObjectPosition() {
   }
 }
 
+function isNearObject(x, y) {
+  let d = dist(x, y, objectX, objectY);
+
+  return d < 100; // 이 값이 작으면 인식이 빡빡함
+}
 
 function drawObject(x, y) {
   push();
