@@ -61,6 +61,11 @@ let cloud_move = [200,400,600,800,1000,1200];
 let fade = 0;
 let fadeout_on = false;
 let fadeon_on = false;
+let message = ["당신이 준 물건들",
+              "도끼는 나무를 과도하게 베어버렸고",
+              "기름은 과소비된 전기를 만든다고 대기오염을 이르켰고"
+              "과도한 전자기기 교체로 오염을 이르켰죠"
+              ];
 
 // 하늘 이미지
 let img_sky;
@@ -419,7 +424,6 @@ function drawCredit() {
   fill(0,0,0,credit_bg_fade);
   rect(300 * scaleX,225 * scaleY,600 * scaleX,450 * scaleY);
   
-  fill(255);
   textAlign(CENTER, CENTER);
   textSize(20 * scaleY);
   text("CREDIT", 80 * scaleX, 20 * scaleY);
@@ -803,6 +807,12 @@ function fadeout(){
   fill(0,0,0,fade);
   strokeWeight(0);
   rect(width/2, height/2, width, height);
+  textFont(koreanFont);
+  fill(0,0,0,fade);
+  textAlign(CENTER, CENTER);
+  textSize(100 * scaleY);
+  text("CREDIT", 400 * scaleX, 225 * scaleY);
+  
   if(fade >= 255){
     fadeout_on = false;
     fadeon_on = true;
@@ -818,6 +828,11 @@ function fadeon(){
   fill(0,0,0,fade);
   strokeWeight(0);
   rect(width/2, height/2, width, height);
+  textFont(koreanFont);
+  fill(0,0,0,fade);
+  textAlign(CENTER, CENTER);
+  textSize(100 * scaleY);
+  text("CREDIT", 400 * scaleX, 225 * scaleY);
   if(fade <= 0){
     fadeon_on = false;
     fade = 0;
