@@ -62,9 +62,9 @@ let fade = 0;
 let fadeout_on = false;
 let fadeon_on = false;
 let message = ["당신이 준 물건들",
-              "도끼는 나무를 과도하게 베어버렸고",
-              "기름은 과소비된 전기를 만든다고 대기오염을 이르켰고",
-              "과도한 전자기기 교체로 오염을 이르켰죠"
+              "도끼질이 멈추지 않았고, 숲은 사라졌습니다.",
+              "기름은 불을 지폈고, 그 연기는 하늘을 가렸습니다.",
+              "휴대폰은 연결을 주었지만, 채굴은 생태계를 단절시켰습니다다."
               ];
 
 // 하늘 이미지
@@ -363,11 +363,13 @@ function draw() {
     pop();
   }
 
-  if (sence === 4 && !fadeout_on && !fadeon_on) {
-  if (!treeCut4[0]) drawTreePulse(375 * scaleX, 325 * scaleY);
-  if (!treeCut4[1]) drawTreePulse(575 * scaleX, 325 * scaleY);
-  if (!treeCut4[2]) drawTreePulse(675 * scaleX, 325 * scaleY);
+if ((sence === 3 || sence === 4) && !fadeout_on && !fadeon_on) {
+  const targets = (sence === 3) ? treeCut : treeCut4;
+  if (!targets[0]) drawTreePulse(375 * scaleX, 325 * scaleY);
+  if (!targets[1]) drawTreePulse(575 * scaleX, 325 * scaleY);
+  if (!targets[2]) drawTreePulse(675 * scaleX, 325 * scaleY);
 }
+
 
 }
 
@@ -801,19 +803,21 @@ function background6(){
 }
 //
 
-function fadeout(){
+function fadeout() {
   push();
   fade += 8;
-  fill(0,0,0,fade);
-  strokeWeight(0);
-  rect(width/2, height/2, width, height);
+  fill(0, 0, 0, fade);
+  noStroke();
+  rect(width / 2, height / 2, width, height);
+
   textFont(koreanFont);
-  fill(200,200,200,fade);
+  fill(255, 255, 255, fade);         // 완전 흰색으로 변경
   textAlign(CENTER, CENTER);
-  textSize(30 * scaleY);
-  text(message[sence - 1], 400 * scaleX, 225 * scaleY);
-  
-  if(fade >= 255){
+  textSize(20 * scaleY);             // 글자 크기 줄임
+  textWrap(CHAR);
+  text(message[sence - 1], width / 2, height / 2, 600 * scaleX); // 줄바꿈 포함, 가로 제한
+
+  if (fade >= 255) {
     fadeout_on = false;
     fadeon_on = true;
     fade = 255;
@@ -822,23 +826,28 @@ function fadeout(){
   pop();
 }
 
-function fadeon(){
+
+function fadeon() {
   push();
   fade -= 8;
-  fill(0,0,0,fade);
-  strokeWeight(0);
-  rect(width/2, height/2, width, height);
+  fill(0, 0, 0, fade);
+  noStroke();
+  rect(width / 2, height / 2, width, height);
+
   textFont(koreanFont);
-  fill(200,200,200,fade);
+  fill(255, 255, 255, fade);         // 흰색 유지
   textAlign(CENTER, CENTER);
-  textSize(30 * scaleY);
-  text(message[sence - 2], 400 * scaleX, 225 * scaleY);
-  if(fade <= 0){
+  textSize(20 * scaleY);             // 글자 크기 줄임
+  textWrap(CHAR);
+  text(message[sence - 2], width / 2, height / 2, 600 * scaleX); // 줄바꿈 포함
+
+  if (fade <= 0) {
     fadeon_on = false;
     fade = 0;
   }
   pop();
 }
+
 
 function drawHands() {
   for (let hand of hands) {
@@ -998,6 +1007,7 @@ function treeClicked() {
     targets[2] = true;
   }
 }
+
 
 function drawTreePulse(x, y) {
   let r = 20 + sin(frameCount * 0.3) * 10;
