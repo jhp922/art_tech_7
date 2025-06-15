@@ -63,7 +63,7 @@ let fadeon_on = false;
 let message = ["당신이 준 물건들",
               "도끼질이 멈추지 않았고, 숲은 사라졌습니다.",
               "기름은 불을 지폈고, 그 연기는 하늘을 가렸습니다.",
-              "휴대폰은 연결을 주었지만, 채굴은 생태계를 단절시켰습니다."
+              "휴대폰은 세계를 연결헀지, 채굴은 생태계를 단절시켰습니다."
               ];
 
 // 하늘 이미지
@@ -396,7 +396,7 @@ function updateScaleFactors() {
 
 function drawStartScreen() {
   background1(0);
-  let mainText = "Nature Interaction";
+  let mainText = "Nature\nInteraction";
   let subText = "PRESS SPACE TO CONTINUE";
   textAlign(CENTER, CENTER);
   textSize(64 * scaleY);
