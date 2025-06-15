@@ -135,8 +135,9 @@ let baseY = 0;
 let showBird = false;
 let frameToggle1 = false;
 
-let treeCut = [false, false, false]; // 잎 없는 나무 3그루 클릭 여부
-
+// 잎 없는 나무 3그루 클릭 여부
+let treeCut = [false, false, false]; 
+let treeCut4 = [false, false, false]; 
 
 
 
@@ -356,6 +357,13 @@ function draw() {
     text(desc, boxX, boxY, boxW - 24 * scaleX, boxH - 24 * scaleY);
     pop();
   }
+
+  if (sence === 4 && !fadeout_on && !fadeon_on) {
+  if (!treeCut4[0]) drawTreePulse(375 * scaleX, 325 * scaleY);
+  if (!treeCut4[1]) drawTreePulse(575 * scaleX, 325 * scaleY);
+  if (!treeCut4[2]) drawTreePulse(675 * scaleX, 325 * scaleY);
+}
+
 }
 
 
@@ -929,9 +937,6 @@ function nextCharacter() {
 }
 
 
-
-
-
 function isNearCharacter(x, y) {
   // objectX, objectY(비디오 픽셀 기준)와 characterX, characterY(화면 기준) 비교
   // 화면 좌표계로 변환 필요
@@ -956,23 +961,37 @@ function drawBird(){
 }
 
 function treeClicked() {
-  if (!treeCut[0] &&
+  if (sence !== 3 && sence !== 4) return;
+
+  let targets = (sence === 3) ? treeCut : treeCut4;
+
+  if (!targets[0] &&
       mouseX > 300 * scaleX && mouseX < 450 * scaleX &&
       mouseY > 190 * scaleY && mouseY < 460 * scaleY) {
-    treeCut[0] = true;
+    targets[0] = true;
   }
 
-  if (!treeCut[1] &&
+  if (!targets[1] &&
       mouseX > 500 * scaleX && mouseX < 650 * scaleX &&
       mouseY > 190 * scaleY && mouseY < 460 * scaleY) {
-    treeCut[1] = true;
+    targets[1] = true;
   }
 
-  if (!treeCut[2] &&
+  if (!targets[2] &&
       mouseX > 600 * scaleX && mouseX < 750 * scaleX &&
       mouseY > 190 * scaleY && mouseY < 460 * scaleY) {
-    treeCut[2] = true;
+    targets[2] = true;
   }
 }
+
+function drawTreePulse(x, y) {
+  let r = 20 + sin(frameCount * 0.3) * 10;
+  noFill();
+  stroke(255, 215, 0, 180);
+  strokeWeight(3);
+  ellipse(x, y, r * scaleX, r * scaleY);
+}
+
+
 
 
