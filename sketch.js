@@ -1,8 +1,7 @@
 // Nature Interaction by 임규빈, 오세진, 박지환
 // Fullscreen and scaling modification by Perplexity
-// 전체 수정된 코드 (캐릭터 등장 문제 해결, 누락 함수 포함)
 
-let state = "start"; // "start" or "game" or "credit"
+let state = "start"; // "start" or "running" or "credit"
 
 let pixelFont;
 let koreanFont;
@@ -319,21 +318,23 @@ function draw() {
   
   
   if (
-    state === "game" &&
+    state === "running" &&
     (sence === 2 || sence === 3) &&
     !fadeout_on && !fadeon_on
   ) {
-  if (random(1) < 0.005 && !showBird) {
-    birdX = random(100 * scaleX, 700 * scaleX);
-    baseY = random(100 * scaleY, 200 * scaleY);
-    showBird = true;
+    if (random(1) < 0.005 && !showBird) {
+      birdX = random(100 * scaleX, 700 * scaleX);
+      baseY = random(100 * scaleY, 200 * scaleY);
+      showBird = true;
+    }
+
+    if (showBird) {
+      if (frameCount % 6 === 0) frameToggle1 = !frameToggle1;
+      drawBird();
+    }
   }
 
-  if (showBird) {
-    if (frameCount % 6 === 0) frameToggle1 = !frameToggle1;
-    drawBird();
-  }
-}
+  
   if (sence === 1 && showInstruction) {
     fill(255);
     stroke(0);
@@ -380,7 +381,6 @@ function windowResized() {
   updateScaleFactors();
   setCharacterPositionByAge();
 
-  // 오브젝트도 재배치 (캐릭터와 겹치지 않게)
   objectX = 650 * scaleX;
   objectY = 300 * scaleY;
 }
@@ -396,7 +396,7 @@ function updateScaleFactors() {
 
 function drawStartScreen() {
   background1(0);
-  let mainText = "NATURE";
+  let mainText = "Nature Interaction";
   let subText = "PRESS SPACE TO CONTINUE";
   textAlign(CENTER, CENTER);
   textSize(64 * scaleY);
@@ -480,9 +480,8 @@ function drawCredit() {
 }
 
 function mousePressed(){
-  if (!fullscreen()) fullscreen(true);
-  if(state === "start") {
-    state = "game";
+  if (state === "start") {
+    state = "running";
     characterAppearAnim = true;
     characterAppearFrame = 0;
     characterAppearDone = false;
@@ -490,7 +489,7 @@ function mousePressed(){
     isGiven = true;
   }
 
-  if (state === "game" && (sence === 3 || sence === 4)) {
+  if (state === "running" && (sence === 3 || sence === 4)) {
     treeClicked();
   }
 
@@ -512,11 +511,12 @@ function keyPressed() {
   }
 
   if (state === "start" && (key === ' ' || keyCode === ENTER)) {
-    state = "game";
+    state = "running";
     characterAppearAnim = true;
     characterAppearFrame = 0;
     characterAppearDone = false;
   }
+
   if(credit_bg_fade > 50){
     credit += 1;
   }
@@ -985,7 +985,6 @@ function gotHands(results) {
 function drawBird(){
   let birdY = baseY + sin(frameCount * 0.1) * 20 * scaleY;
 
-  // 크기를 60x60으로 줄임
   image(
     frameToggle1 ? birdImgs[0] : birdImgs[1],
     birdX, birdY,
