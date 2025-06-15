@@ -808,9 +808,9 @@ function fadeout(){
   strokeWeight(0);
   rect(width/2, height/2, width, height);
   textFont(koreanFont);
-  fill(0,0,0,fade);
+  fill(200,200,200,fade);
   textAlign(CENTER, CENTER);
-  textSize(100 * scaleY);
+  textSize(30 * scaleY);
   text(message[sence - 1], 400 * scaleX, 225 * scaleY);
   
   if(fade >= 255){
@@ -829,9 +829,9 @@ function fadeon(){
   strokeWeight(0);
   rect(width/2, height/2, width, height);
   textFont(koreanFont);
-  fill(0,0,0,fade);
+  fill(200,200,200,fade);
   textAlign(CENTER, CENTER);
-  textSize(100 * scaleY);
+  textSize(30 * scaleY);
   text(message[sence - 2], 400 * scaleX, 225 * scaleY);
   if(fade <= 0){
     fadeon_on = false;
