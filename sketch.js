@@ -697,32 +697,37 @@ function background3() {
 
 
 function background4(){
+function background4() {
   push();
-  image(img_sky4,400 * scaleX,225 * scaleY,800 * scaleX,450 * scaleY);
-  image(img_ground4,400 * scaleX,225 * scaleY,800 * scaleX,450 * scaleY);
+  image(img_sky4, 400 * scaleX, 225 * scaleY, 800 * scaleX, 450 * scaleY);
+  image(img_ground4, 400 * scaleX, 225 * scaleY, 800 * scaleX, 450 * scaleY);
 
-  image(img_factory1,130 * scaleX,204 * scaleY,200 * scaleX,200 * scaleY);
-  image(img_factory1,600 * scaleX,204 * scaleY,200 * scaleX,200 * scaleY);
-  making_smoke(370 * scaleX,110 * scaleY);
-  image(img_factory2,370 * scaleX,183 * scaleY,150 * scaleX,150 * scaleY);
+  image(img_factory1, 130 * scaleX, 204 * scaleY, 200 * scaleX, 200 * scaleY);
+  image(img_factory1, 600 * scaleX, 204 * scaleY, 200 * scaleX, 200 * scaleY);
+  making_smoke(370 * scaleX, 110 * scaleY);
+  image(img_factory2, 370 * scaleX, 183 * scaleY, 150 * scaleX, 150 * scaleY);
 
-  image(img_noleaf_tree_3,0 * scaleX + background_move_n * scaleX,190 * scaleY,150 * scaleX,270 * scaleY);
-  image(img_cut_tree_1,100 * scaleX + background_move_n * scaleX,300 * scaleY,120 * scaleX,120 * scaleY);
-  image(img_cut_tree_1,200 * scaleX + background_move_n * scaleX,280 * scaleY,120 * scaleX,120 * scaleY);  
-  image(img_noleaf_tree_3,500 * scaleX + background_move_n * scaleX,190 * scaleY,150 * scaleX,270 * scaleY);
-  image(img_noleaf_tree_2,600 * scaleX + background_move_n * scaleX,190 * scaleY,150 * scaleX,270 * scaleY);
-  image(img_noleaf_tree_1,300 * scaleX + background_move_n * scaleX,190 * scaleY,150 * scaleX,270 * scaleY);
-  image(img_noleaf_tree_1,800 * scaleX + background_move_n * scaleX,190 * scaleY,150 * scaleX,270 * scaleY);
+  image(img_noleaf_tree_3, 0 * scaleX + background_move_n * scaleX, 190 * scaleY, 150 * scaleX, 270 * scaleY);
+  image(img_cut_tree_1, 100 * scaleX + background_move_n * scaleX, 300 * scaleY, 120 * scaleX, 120 * scaleY);
+  image(img_cut_tree_1, 200 * scaleX + background_move_n * scaleX, 280 * scaleY, 120 * scaleX, 120 * scaleY);
 
-  image(img_noleaf_tree_3,0 * scaleX,450 * scaleY,150 * scaleX,270 * scaleY);
-  image(img_noleaf_tree_3,100 * scaleX,450 * scaleY,150 * scaleX,270 * scaleY);
-  image(img_noleaf_tree_1,300 * scaleX,430 * scaleY,150 * scaleX,270 * scaleY);
-  image(img_noleaf_tree_2,400 * scaleX,450 * scaleY,150 * scaleX,270 * scaleY);
-  image(img_noleaf_tree_3,600 * scaleX,450 * scaleY,150 * scaleX,270 * scaleY);
-  image(img_cut_tree_1,700 * scaleX + background_move_n * scaleX,430 * scaleY,120 * scaleX,120 * scaleY);  
-  image(img_noleaf_tree_2,800 * scaleX,450 * scaleY,150 * scaleX,270 * scaleY);
+  if (!treeCut4[0]) image(img_noleaf_tree_1, 300 * scaleX + background_move_n * scaleX, 190 * scaleY, 150 * scaleX, 270 * scaleY);
+  if (!treeCut4[1]) image(img_noleaf_tree_3, 500 * scaleX + background_move_n * scaleX, 190 * scaleY, 150 * scaleX, 270 * scaleY);
+  if (!treeCut4[2]) image(img_noleaf_tree_2, 600 * scaleX + background_move_n * scaleX, 190 * scaleY, 150 * scaleX, 270 * scaleY);
+
+  image(img_noleaf_tree_1, 800 * scaleX + background_move_n * scaleX, 190 * scaleY, 150 * scaleX, 270 * scaleY);
+
+  image(img_noleaf_tree_3, 0 * scaleX, 450 * scaleY, 150 * scaleX, 270 * scaleY);
+  image(img_noleaf_tree_3, 100 * scaleX, 450 * scaleY, 150 * scaleX, 270 * scaleY);
+  image(img_noleaf_tree_1, 300 * scaleX, 430 * scaleY, 150 * scaleX, 270 * scaleY);
+  image(img_noleaf_tree_2, 400 * scaleX, 450 * scaleY, 150 * scaleX, 270 * scaleY);
+  image(img_noleaf_tree_3, 600 * scaleX, 450 * scaleY, 150 * scaleX, 270 * scaleY);
+  image(img_cut_tree_1, 700 * scaleX + background_move_n * scaleX, 430 * scaleY, 120 * scaleX, 120 * scaleY);
+  image(img_noleaf_tree_2, 800 * scaleX, 450 * scaleY, 150 * scaleX, 270 * scaleY);
 
   pop();
+}
+
 }
 
 function making_smoke(x_position,y_position){
