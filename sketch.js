@@ -109,10 +109,10 @@ let objectVisible = true;
 let isGrabbing = false;
 let offsetX = 0, offsetY = 0;
 const itemDescs = [
-  "CAN PLAY WITH",
-  "CUT TREE",
-  "INDUSTRIAL DEVELOPMENT",
-  "RARE MINERAL CONSUMPTION",
+  "A toy brings joy... but at what cost?",
+  "The axe shapes progress—and clears life.",
+  "Oil powers industry, and poisons air.",
+  "This phone connects us,\nbut disconnects us from nature.",
 ];
 
 let openHandImg, closedHandImg;
