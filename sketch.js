@@ -490,11 +490,15 @@ function mousePressed(){
     isGiven = true;
   }
 
-  if (state === "game" && sence === 3) treeClicked();
+  if (state === "game" && (sence === 3 || sence === 4)) {
+    treeClicked();
+  }
+
   if(credit_bg_fade > 50){
     credit += 1;
   }
 }
+
 
 function keyPressed() {
   if (keyCode === ESCAPE) {
