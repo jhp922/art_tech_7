@@ -428,6 +428,7 @@ function drawCredit() {
   
   textAlign(CENTER, CENTER);
   textSize(20 * scaleY);
+  fill(255,255,255,credit_bg_fade);
   text("CREDIT", 80 * scaleX, 20 * scaleY);
   
   switch(credit){
