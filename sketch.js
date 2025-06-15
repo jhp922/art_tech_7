@@ -413,10 +413,10 @@ function drawStartScreen() {
     stroke(255);
     strokeWeight(6 * scaleX);
     fill(0);
-    text(subText, width / 2, height / 2 + 30 * scaleY);
+    text(subText, width / 2, height / 2 + 60 * scaleY);
     noStroke();
     fill(0);
-    text(subText, width / 2, height / 2 + 30 * scaleY);
+    text(subText, width / 2, height / 2 + 60 * scaleY);
   }
 }
 
