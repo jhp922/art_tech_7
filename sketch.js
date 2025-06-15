@@ -821,7 +821,7 @@ function drawHands() {
   for (let hand of hands) {
     let indexTip = hand.keypoints.find(k => k.name === "index_finger_tip");
     if (indexTip) {
-      let screenX = indexTip.x / 640 * width;
+      let screenX = width - (indexTip.x / 640 * width);
       let screenY = indexTip.y / 480 * height;
       image(isGrabbing ? closedHandImg : openHandImg, screenX, screenY, 60 * scaleX, 60 * scaleY);
     }
@@ -834,23 +834,18 @@ function updateHandState() {
     isGrabbing = false;
     return;
   }
-
   let hand = hands[0];
-
   if (hand && hand.keypoints) {
     if (hand.handInViewConfidence && hand.handInViewConfidence < 0.75) return;
     if (hand.keypoints.length < 10) return;
   }
-  
   let thumbTip = hand.keypoints.find(k => k.name === "thumb_tip");
   let indexTip = hand.keypoints.find(k => k.name === "index_finger_tip");
-
   if (thumbTip && indexTip) {
-    let thumbX = thumbTip.x / 640 * width;
+    let thumbX = width - (thumbTip.x / 640 * width);
     let thumbY = thumbTip.y / 480 * height;
-    let indexX = indexTip.x / 640 * width;
+    let indexX = width - (indexTip.x / 640 * width);
     let indexY = indexTip.y / 480 * height;
-
     let d = dist(thumbX, thumbY, indexX, indexY);
     if (d < 70) {
       if (!isGrabbing && objectVisible && isNearObject(indexX, indexY)) {
@@ -868,16 +863,16 @@ function updateHandState() {
 function updateObjectPosition() {
   if (!isGrabbing || !objectVisible) return;
   if (hands.length === 0) return;
-
   let hand = hands[0];
   let indexTip = hand.keypoints.find(k => k.name === "index_finger_tip");
   if (indexTip) {
-    let indexX = indexTip.x / 640 * width;
+    let indexX = width - (indexTip.x / 640 * width);
     let indexY = indexTip.y / 480 * height;
     objectX = indexX + offsetX;
     objectY = indexY + offsetY;
   }
 }
+
 
 function isNearObject(x, y) {
   let d = dist(x, y, objectX, objectY);
