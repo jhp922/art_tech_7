@@ -4,7 +4,7 @@
 let state = "start"; // "start" or "running" or "credit"
 
 let pixelFont;
-let koreanFont;
+let koreanFont; 
 
 // 크레딧 관련
 let credit_bg_fade = 0;
